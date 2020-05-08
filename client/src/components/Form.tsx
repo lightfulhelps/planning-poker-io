@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { useIO } from '../contexts/io';
 import { Link, useParams } from 'react-router-dom';
+import { Button, Card } from '../styles/components';
 
 // Making the App component
 const App = () => {
@@ -10,10 +11,12 @@ const App = () => {
   let { roomId } = useParams();
 
   return (
-    <div>
+    <Card>
       <input name="name" onChange={(e) => setName(e.target.value)} />
-      <button onClick={() => connect({ name }, roomId)}>Connect</button>
-    </div>
+      <Button icon="user" onClick={() => connect({ name }, roomId)}>
+        Connect
+      </Button>
+    </Card>
   );
 };
 
