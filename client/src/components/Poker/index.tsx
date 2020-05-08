@@ -7,19 +7,20 @@ type Props = {
 };
 
 const Poker: React.FC<Props> = ({ players }) => {
-  const { user } = useIO();
+  const { user, showdown, reveal, reset } = useIO();
+  console.log('showdown :', showdown);
   const otherPlayers = players
-    .filter((player) => player.id !== user.id)
+    .filter((player) => {
+      return player.id !== user.id;
+    })
     .sort((a, b) => (a.name.toUpperCase() > b.name.toUpperCase() ? 1 : -1));
-
-  const reveal = () => {};
 
   return (
     <>
-      <PokerControl handleReveal={reveal} />
-      <PokerPlayer isUser player={user} />
+      <PokerControl handleReveal={reveal} handleReset={reset} />
+      <PokerPlayer isUser player={user} showdown />
       {otherPlayers.map((player) => (
-        <PokerPlayer key={player.id} player={player} />
+        <PokerPlayer key={player.id} player={player} showdown={showdown} />
       ))}
     </>
   );

@@ -1,28 +1,24 @@
 import React, { useState, useContext, useEffect } from 'react';
 import socketIOClient from 'socket.io-client';
 import { useHistory } from 'react-router-dom';
+import EVENTS from './ioEvents';
 const endpoint = 'localhost:7000';
 
 type User = Player;
 
-type Room = {
-  id: string;
-  users: User[];
-};
-
 interface ContextProps {
-  connect: (user: Omit<User, 'id'>, roomId: string) => void;
+  connect: (user: Pick<User, 'name'>, roomId: string) => void;
   playCard: (card: Card) => void;
+  reveal: () => void;
+  reset: () => void;
   room: Room;
-  status: string;
   user: User;
+  showdown: boolean;
 }
 
 const socket = socketIOClient(endpoint, {
   autoConnect: false,
 });
-socket.open();
-console.log('init');
 
 export const IOContext = React.createContext<ContextProps | null>(null);
 
@@ -36,51 +32,66 @@ export const useIO = () => {
 
 export const IOProvider: React.FC = ({ children }) => {
   const history = useHistory();
+
   const [user, setUser] = useState(null);
   const [room, setRoom] = useState(null);
+  const [showdown, setShowdown] = useState(false);
 
-  const [status, setStatus] = useState('disconnected');
-  console.log('status :', status);
-
-  // setTimeout(() => {
-  //   console.log(socket.disconnected ? 'disconnected' : 'connected');
-  //   setStatus(socket.disconnected ? 'disconnected' : 'connected');
-  // }, 5000);
-
-  socket.on('userJoined', (roomInfo) => setRoom(roomInfo));
-  socket.on('disconnect', (reason) => {
-    console.log('client disconnect :', reason);
-    setStatus('disconnected');
-  });
-  socket.on('user disconnected', (newRoom) => {
-    setRoom(newRoom);
-  });
-
-  const connect = (userInfo: Omit<User, 'id'>, roomId: string) => {
+  const connect = (userInfo: Pick<User, 'name'>, roomId: string) => {
     socket.open();
-    socket.emit(
-      'attempt connection',
-      { userInfo, roomId },
-      ({ user, room }: { user: User; room: Room }) => {
-        console.log('user :', user);
-        if (user) {
-          setUser(user);
-          setRoom(room);
-          setStatus('connected');
-          history.push(`/room/${roomId}`);
-        } else {
-          console.log('Error: cannot connect');
-        }
-      }
-    );
+    console.log('init');
+    socket.open();
+    socket.emit(EVENTS.CONNECTION, { userInfo, roomId });
+    setBindings();
+  };
+
+  const setBindings = () => {
+    socket.on(EVENTS.CONNECTION_OK, (roomInfo: Room) => {
+      updateEveryone(roomInfo);
+      history.push(`/room/${roomInfo.id}`);
+    });
+    socket.on(EVENTS.UPDATE_ROOM, (roomInfo: Room) => {
+      console.log('UPDATE_ROOM :', roomInfo);
+      updateEveryone(roomInfo);
+    });
+    socket.on(EVENTS.POKER_REVEAL, () => {
+      console.log('reveal');
+      setShowdown(true);
+    });
+    socket.on(EVENTS.POKER_RESET, () => {
+      console.log('reset');
+      setShowdown(false);
+    });
+    socket.on('user disconnected', (newRoom: Room) => {
+      setRoom(newRoom);
+    });
+  };
+
+  const updateEveryone = (roomInfo: Room) => {
+    setRoom(roomInfo);
+    setUser(roomInfo.players.filter((player) => player.id === socket.id)[0]);
   };
 
   const playCard = (card: Card) => {
-    socket.emit('play card', card);
+    socket.emit(EVENTS.POKER_PLAY_CARD, card);
+  };
+
+  const reveal = () => {
+    sendToEveryone(EVENTS.POKER_REVEAL);
+  };
+  const reset = () => {
+    sendToEveryone(EVENTS.POKER_RESET);
+  };
+
+  const sendToEveryone = (event: string) => {
+    socket.emit(event);
+    socket.emit(EVENTS.SEND_TO_ALL, room.id, event);
   };
 
   return (
-    <IOContext.Provider value={{ connect, user, room, status, playCard }}>
+    <IOContext.Provider
+      value={{ user, room, showdown, connect, playCard, reveal, reset }}
+    >
       {children}
     </IOContext.Provider>
   );

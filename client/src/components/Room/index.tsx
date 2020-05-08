@@ -5,30 +5,30 @@ import { useParams, useHistory } from 'react-router-dom';
 import Poker from '../Poker';
 
 const Room: React.FC = () => {
-  const { user, status, room } = useIO();
-  console.log('room :', room);
+  const { user, room } = useIO();
   const { id } = useParams();
   const history = useHistory();
 
   useEffect(() => {
-    if (status === 'disconnected') {
+    if (!room) {
       history.push(`/invitation/${id}`);
     }
-  }, [history, id, status, room]);
-  if (status === 'disconnected') return <></>;
+  }, [history, id, room]);
+
+  if (!room) return <></>;
   else
     return (
       <>
         <h1>Room {id}</h1>
         <p>Hello {user?.name}</p>
         <ul>
-          {room?.users.map((user) => (
+          {room?.players.map((user) => (
             <li key={user.id}>
               {user.name} ({user.id})
             </li>
           ))}
         </ul>
-        <Poker players={room?.users} />
+        <Poker players={room.players} />
       </>
     );
 };

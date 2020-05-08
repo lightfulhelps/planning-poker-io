@@ -1,5 +1,6 @@
-import { addUser, setUserCard } from './users';
-import { getRoomUsers } from './rooms';
+import { setUser, getUsers, getUser } from './users';
+
+console.clear();
 
 const express = require('express');
 const http = require('http');
@@ -17,38 +18,69 @@ const server = http.createServer(app);
 export const io = socketIO(server);
 
 io.on('connection', (socket) => {
-  console.log('New client connected');
-
-  socket.on('attempt connection', ({ userInfo, roomId }, then) => {
+  socket.on('user_connecting', ({ userInfo, roomId }, then) => {
     console.log(`${userInfo.name} is connected to room : ${roomId}`);
     socket.join(roomId);
-    const user = addUser(socket.id, userInfo.name);
-    const room = { id: roomId, users: getRoomUsers(roomId) };
-    io.sockets.in(roomId).emit('userJoined', room);
+    const user = setUser(socket.id, { roomId, ...userInfo });
 
-    then({ user, room });
+    console.log('user :', user);
+    const room = { id: roomId, players: getRoomUsers(roomId) };
+
+    socket.emit('succesful_connection', room);
+    updateClientRoom(roomId);
   });
 
-  socket.on('play card', (card) => {
-    setUserCard(socket.id, card);
+  socket.on('poker_play_card', (card: Card) => {
+    const user = setUser(socket.id, { card });
+    updateClientRoom(user.roomId);
   });
 
-  // disconnect is fired when a client leaves the server
-  socket.on('disconnecting', (reason) => {
-    let rooms = Object.keys(socket.rooms);
-    rooms.forEach((room) => {
-      socket.to(room).emit('user disconnected', {
-        id: room,
-        users: getRoomUsers(room).filter((e) => e.id !== socket.id),
-      });
+  socket.on('poker_reset', (card: Card) => {
+    console.log('getUser(socket.id).roomId :', getUser(socket.id).roomId);
+    console.log('io.sockets.adapter.rooms :', io.sockets.adapter.rooms);
+    Object.keys(
+      io.sockets.adapter.rooms[getUser(socket.id).roomId].sockets
+    ).forEach((userId) => {
+      setUser(userId, { card: undefined });
     });
-    console.log('reason :', reason);
-    console.log('disconnecting');
+    updateClientRooms();
   });
 
-  socket.on('disconnected', () => {
-    console.log('user disconnected');
+  socket.on('send_to_all', (roomId: string, event: string) => {
+    io.sockets.in(roomId).emit(event);
   });
+
+  // fired when a client leaves the server
+  socket.on('disconnecting', (reason: string) => {
+    updateClientRooms(true);
+    console.log('reason :', reason);
+    // console.log('disconnecting');
+  });
+
+  // socket.on('disconnected', () => {
+  //   console.log('user disconnected');
+  // });
+
+  const updateClientRooms = (excludeCurrentUser = false) => {
+    let rooms = Object.keys(socket.rooms);
+    rooms.forEach((roomId) => {
+      updateClientRoom(roomId, excludeCurrentUser);
+    });
+  };
+
+  const updateClientRoom = (roomId: string, excludeCurrentUser = false) => {
+    const newPlayers = excludeCurrentUser
+      ? getRoomUsers(roomId).filter((e) => e.id !== socket.id)
+      : getRoomUsers(roomId);
+    io.sockets.in(roomId).emit('update_room', {
+      id: roomId,
+      players: newPlayers,
+    } as Room);
+  };
+
+  const getRoomUsers = (roomId: string) => {
+    return getUsers(Object.keys(io.sockets.adapter.rooms[roomId].sockets));
+  };
 });
 
 server.listen(port, () => console.log(`Listening on port ${port}`));

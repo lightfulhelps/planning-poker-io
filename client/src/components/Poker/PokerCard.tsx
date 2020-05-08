@@ -6,7 +6,6 @@ const PokerCard: React.FC<Props> = ({ value, onClick }) => {
   return (
     <button
       onClick={(e) => {
-        console.log('e :', e);
         onClick(value);
       }}
     >

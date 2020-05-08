@@ -7,20 +7,16 @@ type UserListItem = { [key: string]: Omit<Player, 'id'> };
 let usersList: UserListItem[] = [];
 
 export const getUsers = (ids: Id[]): User[] => {
-  console.log('ids :', ids);
   return ids.map((id) => getUser(id)).filter((e) => e !== null);
 };
 
 export const getUser = (id: Id): User | null => {
-  console.log('userList[id] :', usersList[id]);
-  if (!usersList[id]) return null;
-  return { id, name: usersList[id].name, card: usersList[id].card };
+  return { id, ...usersList[id] } || null;
 };
 
-export const addUser = (id: Id, name: string): User => {
-  usersList[id] = {};
-  usersList[id].name = name;
-  return { id, name };
+export const setUser = (id: Id, userInfo: Partial<User>): User => {
+  usersList[id] = { ...usersList[id], ...userInfo };
+  return { id, ...usersList[id] };
 };
 
 export const removeUser = (id: Id) => {
