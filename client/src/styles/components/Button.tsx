@@ -13,6 +13,7 @@ export interface ButtonProps {
   variant?: VariantTypes;
   isOutline?: boolean;
   isLink?: boolean;
+  isRound?: boolean;
   icon?: string;
   iconPosition?: 'left' | 'right';
   onClick?: (e: React.MouseEvent) => void;
@@ -23,6 +24,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   variant = 'primary',
   isOutline = false,
   isLink = false,
+  isRound = false,
   size = 'md',
   children,
   type = 'button',
@@ -41,22 +43,32 @@ const Button: React.FunctionComponent<ButtonProps> = ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
-    padding: '5px 16px',
     boxShadow:
       '0px 4px 6px rgba(50, 50, 93, 0.11),\n      0px 1px 3px rgba(0, 0, 0, 0.08)',
-    borderRadius: '4px',
     fontSize: theme.fontSize.default,
     cursor: 'pointer',
     textTransform: 'uppercase',
     fontWeight: 500,
     ...colors,
-    ...(icon && {
-      span: {
+    ...(isRound
+      ? {
+          borderRadius: 99,
+          padding: 5,
+        }
+      : {
+          borderRadius: 4,
+          padding: '5px 16px',
+        }),
+    span: {
+      '& > *': {
+        verticalAlign: 'middle',
+      },
+      ...(icon && {
         ...(iconPosition === 'right'
           ? { marginRight: theme.spacing[1] }
           : { marginLeft: theme.spacing[1] }),
-      },
-    }),
+      }),
+    },
   });
 
   const StyledLink = styled.button({

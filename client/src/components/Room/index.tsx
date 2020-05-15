@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 
 import { useIO } from '../../contexts/io';
-import { useParams, useHistory } from 'react-router-dom';
+import { useParams, useHistory, useLocation } from 'react-router-dom';
 import Poker from '../Poker';
 import { Container, Button } from '../../styles/components';
-import { ArrowLeft } from 'react-feather';
+import { ArrowLeft, Plus } from 'react-feather';
+import CopyToClipBoard from '../common/CopyToClipboard';
 
 const Room: React.FC = () => {
   const { user, room } = useIO();
@@ -22,9 +23,18 @@ const Room: React.FC = () => {
     return (
       <>
         <Container>
-          <Button onClick={() => history.goBack()}>
+          <Button isRound isOutline onClick={() => history.goBack()}>
             <ArrowLeft />
           </Button>
+
+          <CopyToClipBoard
+            text={`${process.env.REACT_APP_APP_URL}/invitation/${room.id}`}
+            render={({ copy }) => (
+              <Button isRound isOutline onClick={copy}>
+                <Plus />
+              </Button>
+            )}
+          />
           <h1>Room {id}</h1>
           <p>Hello {user?.name}</p>
           <ul>
