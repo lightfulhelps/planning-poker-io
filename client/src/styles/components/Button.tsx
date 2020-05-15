@@ -1,19 +1,20 @@
 import React from 'react';
-
 import styled from '../styled';
-
-import { VariantTypes } from './types';
 import theme from '../theme';
+import { upperFirst, camelCase } from 'lodash';
+import { VariantTypes } from './types';
 
-import icon from 'react-feather';
+import * as Icons from 'react-feather';
 
 export interface ButtonProps {
   type?: 'button' | 'submit' | 'reset' | undefined;
   size?: 'lg' | 'md' | 'sm';
   className?: string;
-  variant?: 'primary';
+  variant?: VariantTypes;
   isOutline?: boolean;
-  icon: string;
+  isLink?: boolean;
+  icon?: string;
+  iconPosition?: 'left' | 'right';
   onClick?: (e: React.MouseEvent) => void;
 }
 
@@ -21,16 +22,17 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   className,
   variant = 'primary',
   isOutline = false,
+  isLink = false,
   size = 'md',
   children,
   type = 'button',
   icon,
+  iconPosition = 'left',
   onClick = () => {
     // Empty
   },
   ...others
 }) => {
-  console.log('theme.colors.primary :', theme.colors.primary);
   const colors = !isOutline
     ? { backgroundColor: theme.colors[variant], color: theme.colors.white }
     : { backgroundColor: theme.colors.white, color: theme.colors[variant] };
@@ -38,27 +40,57 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   const StyledButton = styled.button({
     display: 'flex',
     flexDirection: 'row',
-    padding: '50px 16px',
+    alignItems: 'center',
+    padding: '5px 16px',
     boxShadow:
-      '0px 4px 6px rgba(50, 50, 93, 0.11), 0px 1px 3px rgba(0, 0, 0, 0.08)',
+      '0px 4px 6px rgba(50, 50, 93, 0.11),\n      0px 1px 3px rgba(0, 0, 0, 0.08)',
     borderRadius: '4px',
-    fontSize: theme.fontSize.sm,
+    fontSize: theme.fontSize.default,
     cursor: 'pointer',
+    textTransform: 'uppercase',
+    fontWeight: 500,
     ...colors,
+    ...(icon && {
+      span: {
+        ...(iconPosition === 'right'
+          ? { marginRight: theme.spacing[1] }
+          : { marginLeft: theme.spacing[1] }),
+      },
+    }),
   });
 
-  // const Icon = () => import(`react-feather/`);
+  const StyledLink = styled.button({
+    background: 'none',
+    color: theme.colors.primary,
+    border: 'none',
+    padding: '0',
+    font: 'inherit',
+    cursor: 'pointer',
+    outline: 'inherit',
+    '&:hover': {
+      color: 'inherit',
+    },
+  });
+
+  const Icon = icon ? Icons[upperFirst(camelCase(icon))] : undefined;
 
   return (
-    // eslint-disable-next-line react/button-has-type
-    <StyledButton
-      type={type}
-      className={className}
-      onClick={onClick}
-      {...others}
-    >
-      {children}
-    </StyledButton>
+    <>
+      {isLink ? (
+        <StyledLink onClick={onClick}>{children}</StyledLink>
+      ) : (
+        <StyledButton
+          type={type}
+          className={className}
+          onClick={onClick}
+          {...others}
+        >
+          {Icon && iconPosition === 'left' && <Icon size={19} />}
+          <span>{children}</span>
+          {Icon && iconPosition === 'right' && <Icon size={19} />}
+        </StyledButton>
+      )}
+    </>
   );
 };
 

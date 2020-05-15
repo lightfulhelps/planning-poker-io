@@ -1,16 +1,18 @@
 import React from 'react';
+import styled from '@emotion/styled';
+import CardIcon from '../common/CardIcon';
 
 type Props = { onClick: (card: Card) => void; value: string | number };
 
 const PokerCard: React.FC<Props> = ({ value, onClick }) => {
   return (
-    <button
-      onClick={(e) => {
+    <CardIcon
+      value={value.toString()}
+      {...(value === '?' && { color: 'green' })}
+      onClick={() => {
         onClick(value);
       }}
-    >
-      {value}
-    </button>
+    />
   );
 };
 

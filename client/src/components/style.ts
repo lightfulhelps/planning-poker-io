@@ -1,5 +1,3 @@
-import styled from '../styles/styled';
+import styled from '@emotion/styled';
 
-export const Table = styled.table((props) => ({
-  background: props.theme.color.body,
-}));
+export const Table = styled.table((props) => ({}));

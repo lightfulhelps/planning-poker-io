@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import PokerCard from './PokerCard';
 import { useIO } from '../../contexts/io';
+import { Row, Col } from '../../styles/components';
 
-const cardValues = [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, '?'];
+const cardValues = [0, 0.5, 1, 2, 3, 5, 8, 13, 20, 40, 100, '?'];
 
-type Props = { card: Card };
-
-const PokerDeck: React.FC<Props> = ({ card }) => {
+const PokerDeck: React.FC = () => {
   const { playCard } = useIO();
   const selectCard = (card: Card) => {
     playCard(card);
@@ -14,20 +13,16 @@ const PokerDeck: React.FC<Props> = ({ card }) => {
 
   return (
     <div>
-      {!card ? (
-        <ul>
-          {cardValues.map((cardValue, i) => (
-            <li key={i}>
-              <PokerCard
-                onClick={() => selectCard(cardValue)}
-                value={cardValue}
-              />
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <span>{card}</span>
-      )}
+      <Row>
+        {cardValues.map((cardValue, i) => (
+          <Col span={3} key={i}>
+            <PokerCard
+              onClick={() => selectCard(cardValue)}
+              value={cardValue}
+            />
+          </Col>
+        ))}
+      </Row>
     </div>
   );
 };

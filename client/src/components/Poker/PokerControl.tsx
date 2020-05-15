@@ -1,15 +1,22 @@
 import React from 'react';
+import { Button, Row } from '../../styles/components';
+import * as Styled from './pokerStyle';
 
 type Props = {
   handleReveal: () => void;
   handleReset: () => void;
 };
+
 const PokerControl: React.FC<Props> = ({ handleReveal, handleReset }) => {
   return (
-    <div>
-      <button onClick={handleReveal}>Reveal</button>
-      <button onClick={handleReset}>Reset</button>
-    </div>
+    <Styled.ControlWrapper justify="center">
+      <Button onClick={handleReveal} icon="eye">
+        Reveal
+      </Button>
+      <Button onClick={handleReset} icon="alert-octagon" variant="error">
+        Reset
+      </Button>
+    </Styled.ControlWrapper>
   );
 };
 

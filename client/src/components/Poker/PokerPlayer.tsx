@@ -1,5 +1,8 @@
 import React from 'react';
 import PokerDeck from './PokerDeck';
+import { Card } from '../../styles/components';
+import * as Styled from './pokerStyle';
+import { Check } from 'react-feather';
 
 type Props = {
   player: Player;
@@ -12,22 +15,23 @@ const PokerPlayer: React.FC<Props> = ({
   isUser = false,
   showdown = false,
 }) => {
-  let card = '?';
+  let card = '?' as string | React.ReactNode;
   if (showdown && player.card) card = player.card as string;
-  else if (!showdown && player.card) card = 'V';
+  else if (!showdown && player.card) card = <Check size={120} />;
   else if (showdown && !player.card) card = 'X';
-  else card = '?';
+  else card = '...';
 
   return (
-    <div>
-      {isUser ? (
-        <PokerDeck card={player.card} />
-      ) : (
-        <p>
-          {player.name} selected : {card}
-        </p>
-      )}
-    </div>
+    <Styled.PlayerCol>
+      <Styled.PlayerCard>
+        <Styled.PlayerName>{player.name}</Styled.PlayerName>
+        {!isUser || player.card ? (
+          <Styled.CardPicked>{card}</Styled.CardPicked>
+        ) : (
+          <PokerDeck />
+        )}
+      </Styled.PlayerCard>
+    </Styled.PlayerCol>
   );
 };
 

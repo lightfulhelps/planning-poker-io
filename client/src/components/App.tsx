@@ -7,6 +7,8 @@ import theme from '../styles/theme';
 import { ThemeProvider } from 'emotion-theming';
 import { Global, css } from '@emotion/core';
 import emotionReset from 'emotion-reset';
+import '../styles/fonts.css';
+import CardIcon from './common/CardIcon';
 
 export const GlobalStyle = () => (
   <Global
@@ -14,7 +16,7 @@ export const GlobalStyle = () => (
       ${emotionReset}
       html {
         font-size: 62.5%;
-        font-family: 'Open sans', sans-serif;
+        font-family: 'Open Sans', sans-serif;
       }
       body {
         background-color: ${theme.colors.body};
@@ -22,6 +24,40 @@ export const GlobalStyle = () => (
           box-sizing: border-box;
         }
         font-size: 14px;
+      }
+      h1 {
+        font-size: 4rem;
+      }
+      h2 {
+        font-size: 3.2rem;
+      }
+      h3 {
+        font-size: 2.8rem;
+      }
+      h4 {
+        font-size: 2.4rem;
+      }
+      h5 {
+        font-size: 2rem;
+      }
+      h6 {
+        font-size: 1.6rem;
+      }
+      .h1,
+      .h2,
+      .h3,
+      .h4,
+      .h5,
+      .h6,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6 {
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        line-height: 1.2;
       }
     `}
   />

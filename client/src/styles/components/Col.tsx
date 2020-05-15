@@ -7,19 +7,24 @@ type Props = {
   tag?: keyof JSX.IntrinsicElements;
 };
 
-const Col: React.FC<Props> = ({ children, span, ...other }: Props) => {
-  const Element = styled.div`
-    flex: 0 1 auto;
-    max-width: 100%;
-    min-height: 1px;
-    ${span &&
-    ` flex: 0 0 ${100 * (12 / span)}%;
-        max-width: 100%;
-        display: block;
-    `}
-  `;
-
-  return <Element {...other}>{children}</Element>;
+const Col: React.FC<Props> = ({ children, span, ...others }: Props) => {
+  const Element = styled.div(({ span }: { span: number }) => {
+    return {
+      flex: '0 1 auto',
+      maxWidth: '100%',
+      minHeight: '1px',
+      ...(span && {
+        flex: ` 0 0 ${100 * (span / 12)}%`,
+        maxWidth: '100%',
+        display: 'block',
+      }),
+    };
+  });
+  return (
+    <Element span={span} {...others}>
+      {children}
+    </Element>
+  );
 };
 
 export default Col;

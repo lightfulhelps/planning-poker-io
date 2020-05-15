@@ -3,14 +3,14 @@
 // import values from 'lodash/values';
 
 const spacing = {
-  baseline: 1,
+  baseline: 2,
   unit: 'rem',
 };
 
 export default {
   colors: {
     black: '#333',
-    white: '#FFF',
+    white: '#fff',
 
     gray100: '#f7fafc',
     gray200: '#edf2f7',
@@ -24,12 +24,17 @@ export default {
 
     blue: '#6772E5',
     green: '#24B47E',
+    red: '#cd3d64',
 
     body: '#f6f9fc',
     font: '#525F7F',
 
     get primary() {
       return this.blue;
+    },
+
+    get error() {
+      return this.red;
     },
   },
   screens: {
@@ -45,8 +50,12 @@ export default {
     spacing.baseline * 1 + spacing.unit,
     spacing.baseline * 1.25 + spacing.unit,
     spacing.baseline * 1.5 + spacing.unit,
+    spacing.baseline * 1.75 + spacing.unit,
+    spacing.baseline * 2 + spacing.unit,
+    spacing.baseline * 2.25 + spacing.unit,
   ],
   borderRad: {
+    default: '4px',
     none: '0',
     sm: '0.125rem',
     md: '0.25rem',
@@ -62,9 +71,10 @@ export default {
     sm: '1.2rem',
     default: '1.4rem',
     md: '1.6rem',
-    lg: '2.4rem',
+    lg: '1.8rem',
+    xl: '2.4rem',
   },
-};
+} as const;
 
 // const breakpoints = values(theme.screens);
 

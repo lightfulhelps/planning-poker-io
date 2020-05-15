@@ -1,0 +1,64 @@
+// import packages
+import React, { useState } from 'react';
+import { useIO } from '../../contexts/io';
+import { useParams, useHistory } from 'react-router-dom';
+import { Input, Card, Col, Row, Button } from '../../styles/components';
+import * as Styled from './formStyle';
+
+const Layout = () => {
+  let { roomId } = useParams();
+  let history = useHistory();
+  return (
+    <Styled.Layout>
+      <Row justify="center">
+        <Col>
+          <Card>
+            <Styled.CardLayout>
+              <Styled.Heading>
+                Joining the room : <br /> <span>{roomId}</span>
+              </Styled.Heading>
+              <Styled.Description>
+                Your team is waiting for you
+              </Styled.Description>
+              <Form roomId={roomId} />
+              <Button onClick={() => history.push('/')} isLink>
+                Joining another room ?
+              </Button>
+            </Styled.CardLayout>
+          </Card>
+        </Col>
+      </Row>
+    </Styled.Layout>
+  );
+};
+
+const Form: React.FC<{ roomId: string }> = ({ roomId }) => {
+  const [name, setName] = useState('');
+  const { connect } = useIO();
+
+  const handleChange = (e) => {
+    setName((e.target as HTMLInputElement).value);
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    connect({ name }, roomId);
+  };
+
+  return (
+    <Styled.Form onSubmit={onSubmit}>
+      <Input
+        name="name"
+        key="name"
+        placeholder="Username"
+        value={name}
+        icon="box"
+        onChange={(e) => handleChange(e)}
+      />
+      <Styled.SubmitButton icon="arrowRight" iconPosition="right" type="submit">
+        Enter the room
+      </Styled.SubmitButton>
+    </Styled.Form>
+  );
+};
+
+export default Layout;

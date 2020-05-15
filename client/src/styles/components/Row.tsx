@@ -8,14 +8,18 @@ type Props = {
   justify?: 'center' | 'start' | 'end' | 'space-between' | 'space-around';
 };
 
-const Row: React.FC<Props> = ({ children, justify, ...other }: Props) => {
-  const Element = styled.div`
-    display: flex;
-    justify-content: ${justify};
-    flex-wrap: wrap;
-  `;
+const Element = styled.div(({ justify }: Props) => ({
+  display: 'flex',
+  justifyContent: justify,
+  flexWrap: 'wrap',
+}));
 
-  return <Element {...other}>{children}</Element>;
+const Row: React.FC<Props> = ({ children, justify, ...other }: Props) => {
+  return (
+    <Element justify={justify} {...other}>
+      {children}
+    </Element>
+  );
 };
 
 export default Row;
