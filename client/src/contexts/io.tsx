@@ -3,7 +3,8 @@ import socketIOClient from 'socket.io-client';
 import { useHistory } from 'react-router-dom';
 import EVENTS from './ioEvents';
 import { useToaster } from './toaster';
-const endpoint = 'localhost:7000';
+
+const endpoint = process.env.REACT_APP_API_URL;
 
 type User = Player;
 
@@ -54,7 +55,7 @@ export const IOProvider: React.FC = ({ children }) => {
       addToast('success', `You are now connected to the room : ${roomInfo.id}`);
     });
     socket.on(EVENTS.UPDATE_ROOM, (roomInfo: Room) => {
-      console.log('UPDATE_ROOM :', roomInfo);
+      console.log('UPDATE_ROOM');
       updateEveryone(roomInfo);
     });
     socket.on(EVENTS.POKER_REVEAL, () => {
