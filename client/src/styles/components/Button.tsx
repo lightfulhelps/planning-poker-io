@@ -14,6 +14,7 @@ export interface ButtonProps {
   isOutline?: boolean;
   isLink?: boolean;
   isRound?: boolean;
+  isDisabled?: boolean;
   icon?: string;
   iconPosition?: 'left' | 'right';
   onClick?: (e: React.MouseEvent) => void;
@@ -25,6 +26,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   isOutline = false,
   isLink = false,
   isRound = false,
+  isDisabled = false,
   size = 'md',
   children,
   type = 'button',
@@ -50,6 +52,11 @@ const Button: React.FunctionComponent<ButtonProps> = ({
     textTransform: 'uppercase',
     fontWeight: 500,
     ...colors,
+    ...(isDisabled && {
+      backgroundColor: theme.colors.gray200,
+      colors: theme.colors.gray700,
+      cursor: 'default',
+    }),
     ...(isRound
       ? {
           borderRadius: 99,
@@ -59,6 +66,9 @@ const Button: React.FunctionComponent<ButtonProps> = ({
           borderRadius: 4,
           padding: '5px 16px',
         }),
+    '&:focus': {
+      outline: 'none',
+    },
     span: {
       '& > *': {
         verticalAlign: 'middle',
@@ -86,15 +96,20 @@ const Button: React.FunctionComponent<ButtonProps> = ({
 
   const Icon = icon ? Icons[upperFirst(camelCase(icon))] : undefined;
 
+  const handleClick = (e) => {
+    if (isDisabled) e.preventDefault();
+    onClick(e);
+  };
+
   return (
     <>
       {isLink ? (
-        <StyledLink onClick={onClick}>{children}</StyledLink>
+        <StyledLink onClick={handleClick}>{children}</StyledLink>
       ) : (
         <StyledButton
           type={type}
           className={className}
-          onClick={onClick}
+          onClick={handleClick}
           {...others}
         >
           {Icon && iconPosition === 'left' && <Icon size={19} />}

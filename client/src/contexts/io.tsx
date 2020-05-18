@@ -1,7 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import socketIOClient from 'socket.io-client';
 import { useHistory } from 'react-router-dom';
 import EVENTS from './ioEvents';
+import { useToaster } from './toaster';
 const endpoint = 'localhost:7000';
 
 type User = Player;
@@ -32,6 +33,7 @@ export const useIO = () => {
 
 export const IOProvider: React.FC = ({ children }) => {
   const history = useHistory();
+  const { addToast } = useToaster();
 
   const [user, setUser] = useState(null);
   const [room, setRoom] = useState(null);
@@ -49,6 +51,7 @@ export const IOProvider: React.FC = ({ children }) => {
     socket.on(EVENTS.CONNECTION_OK, (roomInfo: Room) => {
       updateEveryone(roomInfo);
       history.push(`/room/${roomInfo.id}`);
+      addToast('success', `You are now connected to the room : ${roomInfo.id}`);
     });
     socket.on(EVENTS.UPDATE_ROOM, (roomInfo: Room) => {
       console.log('UPDATE_ROOM :', roomInfo);
@@ -62,8 +65,12 @@ export const IOProvider: React.FC = ({ children }) => {
       console.log('reset');
       setShowdown(false);
     });
-    socket.on('user disconnected', (newRoom: Room) => {
-      setRoom(newRoom);
+    socket.on(EVENTS.USER_JOINED, (userInfo: User) => {
+      addToast('primary', `${userInfo.name} joined the room`);
+    });
+    socket.on(EVENTS.USER_DICONNECTING, (user) => {
+      console.log('here :');
+      addToast('error', `${user.name} left the room`);
     });
   };
 

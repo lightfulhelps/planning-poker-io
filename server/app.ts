@@ -26,8 +26,9 @@ io.on('connection', (socket) => {
     console.log('user :', user);
     const room = { id: roomId, players: getRoomUsers(roomId) };
 
-    socket.emit('succesful_connection', room);
+    socket.emit('successful_connection', room);
     updateClientRoom(roomId);
+    socket.to(roomId).emit('user_joined', user);
   });
 
   socket.on('poker_play_card', (card: Card) => {
@@ -50,9 +51,12 @@ io.on('connection', (socket) => {
     io.sockets.in(roomId).emit(event);
   });
 
-  // fired when a client leaves the server
   socket.on('disconnecting', (reason: string) => {
     updateClientRooms(true);
+    let rooms = Object.keys(socket.rooms);
+    rooms.forEach((roomId) => {
+      io.sockets.in(roomId).emit('user_disconnecting', getUser(socket.id));
+    });
     console.log('reason :', reason);
     // console.log('disconnecting');
   });

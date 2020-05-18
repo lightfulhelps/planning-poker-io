@@ -36,6 +36,10 @@ export default {
     get error() {
       return this.red;
     },
+
+    get success() {
+      return this.green;
+    },
   },
   screens: {
     sm: '640px',

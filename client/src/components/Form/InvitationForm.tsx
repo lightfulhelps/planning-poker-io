@@ -35,13 +35,14 @@ const Layout = () => {
 const Form: React.FC<{ roomId: string }> = ({ roomId }) => {
   const [name, setName] = useState('');
   const { connect } = useIO();
+  const valid = name.length > 1;
 
   const handleChange = (e) => {
     setName((e.target as HTMLInputElement).value);
   };
   const onSubmit = (e) => {
     e.preventDefault();
-    connect({ name }, roomId);
+    if (valid) connect({ name }, roomId);
   };
 
   return (
@@ -54,7 +55,12 @@ const Form: React.FC<{ roomId: string }> = ({ roomId }) => {
         icon="box"
         onChange={(e) => handleChange(e)}
       />
-      <Styled.SubmitButton icon="arrowRight" iconPosition="right" type="submit">
+      <Styled.SubmitButton
+        icon="arrowRight"
+        isDisabled={!valid}
+        iconPosition="right"
+        type="submit"
+      >
         Enter the room
       </Styled.SubmitButton>
     </Styled.Form>

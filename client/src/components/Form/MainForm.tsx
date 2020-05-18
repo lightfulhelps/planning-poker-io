@@ -1,8 +1,7 @@
 // import packages
 import React, { useState } from 'react';
 import { useIO } from '../../contexts/io';
-import { useParams } from 'react-router-dom';
-import { Input, Card, Col, Row, Button } from '../../styles/components';
+import { Input, Card, Col, Row } from '../../styles/components';
 import * as Styled from './formStyle';
 
 const Layout = () => {
@@ -30,9 +29,11 @@ const Form: React.FC = () => {
   const [roomId, setRoomId] = useState('');
   const { connect } = useIO();
 
+  const valid = name.length > 1 && roomId.length > 3;
+
   const onSubmit = (e) => {
     e.preventDefault();
-    connect({ name }, roomId);
+    if (valid) connect({ name }, roomId);
   };
 
   return (
@@ -40,7 +41,7 @@ const Form: React.FC = () => {
       <Input
         name="roomId"
         key="roomId"
-        placeholder="Room id"
+        placeholder="Room id (4 char. min)"
         value={roomId}
         icon="box"
         onChange={(e) => setRoomId((e.target as HTMLTextAreaElement).value)}
@@ -48,12 +49,17 @@ const Form: React.FC = () => {
       <Input
         name="name"
         key="name"
-        placeholder="Username"
+        placeholder="Username (2 char. min)"
         value={name}
         icon="user"
         onChange={(e) => setName((e.target as HTMLTextAreaElement).value)}
       />
-      <Styled.SubmitButton icon="arrowRight" iconPosition="right" type="submit">
+      <Styled.SubmitButton
+        isDisabled={!valid}
+        icon="arrowRight"
+        iconPosition="right"
+        type="submit"
+      >
         Enter the room
       </Styled.SubmitButton>
     </form>

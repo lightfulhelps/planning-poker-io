@@ -1,7 +1,9 @@
 export default {
   CONNECTION: 'user_connecting',
-  CONNECTION_OK: 'succesful_connection',
+  CONNECTION_OK: 'successful_connection',
   UPDATE_ROOM: 'update_room',
+  USER_JOINED: 'user_joined',
+  USER_DICONNECTING: 'user_disconnecting',
   POKER_PLAY_CARD: 'poker_play_card',
   POKER_REVEAL: 'poker_reveal',
   POKER_RESET: 'poker_reset',
