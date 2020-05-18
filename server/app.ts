@@ -11,11 +11,22 @@ const port = 7000;
 
 const app = express();
 
+app.use(function (req, res, next) {
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
+  next();
+});
+
 // our server instance
 const server = http.createServer(app);
 
 // This creates our socket using the instance of the server
 export const io = socketIO(server);
+
+app.use(cors({ origin: 'http://localhost:8888' }));
 
 io.on('connection', (socket) => {
   socket.on('user_connecting', ({ userInfo, roomId }, then) => {
