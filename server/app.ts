@@ -66,13 +66,7 @@ io.on('connection', (socket) => {
     rooms.forEach((roomId) => {
       io.sockets.in(roomId).emit('user_disconnecting', getUser(socket.id));
     });
-    console.log('reason :', reason);
-    // console.log('disconnecting');
   });
-
-  // socket.on('disconnected', () => {
-  //   console.log('user disconnected');
-  // });
 
   const updateClientRooms = (excludeCurrentUser = false) => {
     let rooms = Object.keys(socket.rooms);
@@ -94,6 +88,10 @@ io.on('connection', (socket) => {
   const getRoomUsers = (roomId: string) => {
     return getUsers(Object.keys(io.sockets.adapter.rooms[roomId].sockets));
   };
+});
+
+app.get('/', function (req, res) {
+  res.send('I am alive');
 });
 
 server.listen(port, () => console.log(`Listening on port ${port}`));

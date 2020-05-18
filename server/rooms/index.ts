@@ -1,8 +1,8 @@
 import { io } from '../app';
 import { getUsers } from '../users';
 
-export const getRoomUsers = (room) => {
-  return getUsers(Object.keys(io.sockets.adapter.rooms[room].sockets));
+export const getRoomUsers = (roomId: string) => {
+  return getUsers(Object.keys(io.sockets.adapter.rooms[roomId].sockets));
 };
 
 // export const setRoomListeners = (roomId) => {
