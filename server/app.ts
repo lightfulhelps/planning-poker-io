@@ -6,8 +6,7 @@ const express = require('express');
 const http = require('http');
 const socketIO = require('socket.io');
 
-// our localhost port
-const port = 7000;
+const port = process.env.PORT || 7000;
 
 const app = express();
 
@@ -20,10 +19,8 @@ app.use(function (req, res, next) {
   next();
 });
 
-// our server instance
 const server = http.createServer(app);
 
-// This creates our socket using the instance of the server
 export const io = socketIO(server);
 
 io.on('connection', (socket) => {
