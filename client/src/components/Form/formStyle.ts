@@ -3,7 +3,7 @@ import { Button } from '../../styles/components';
 import theme from '../../styles/theme';
 
 export const Layout = styled.div({
-  marginTop: '50px',
+  marginTop: '30px',
 });
 export const CardLayout = styled.div({
   textAlign: 'center',
@@ -20,8 +20,14 @@ export const Heading = styled.h5({
   marginTop: theme.spacing[3],
   textTransform: 'uppercase',
   lineHeight: '31px',
+  maxWidth: '100%',
   span: {
+    maxWidth: '100%',
+    display: 'block',
     color: theme.colors.primary,
+    textOverflow: 'ellipsis',
+    whiteSpace: 'nowrap',
+    overflowX: 'hidden',
   },
 });
 
@@ -33,6 +39,7 @@ export const Description = styled.p({
 export const SubmitButton = styled(Button)({
   margin: `${theme.spacing[4]} auto 0`,
 });
+
 export const Form = styled.form({
   marginBottom: theme.spacing[3],
 });

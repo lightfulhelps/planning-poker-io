@@ -1,6 +1,5 @@
 import React from 'react';
 import PokerDeck from './PokerDeck';
-import { Card } from '../../styles/components';
 import * as Styled from './pokerStyle';
 import { Check } from 'react-feather';
 

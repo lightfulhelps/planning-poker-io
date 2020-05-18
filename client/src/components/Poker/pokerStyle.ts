@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Col, Button, Card, Row } from '../../styles/components';
+import { Col, Card, Row } from '../../styles/components';
 import CardIcon from '../common/CardIcon';
 import theme from '../../styles/theme';
 
@@ -21,7 +21,7 @@ export const PlayerName = styled.span({
   fontWeight: 'bold',
   textAlign: 'center',
   display: 'block',
-  marginBottom: theme.spacing[3],
+  paddingBottom: theme.spacing[3],
   textOverflow: 'ellipsis',
   whiteSpace: 'nowrap',
   overflowX: 'hidden',

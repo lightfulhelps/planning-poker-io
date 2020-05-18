@@ -8,7 +8,9 @@ import { ThemeProvider } from 'emotion-theming';
 import { Global, css } from '@emotion/core';
 import emotionReset from 'emotion-reset';
 import '../styles/fonts.css';
-import CardIcon from './common/CardIcon';
+import * as Styled from './style';
+import { ToasterProvider } from '../contexts/toaster';
+import consoleGreetings from './consoleGreetings';
 
 export const GlobalStyle = () => (
   <Global
@@ -20,27 +22,34 @@ export const GlobalStyle = () => (
       }
       body {
         background-color: ${theme.colors.body};
+        color: ${theme.colors.font};
         & * {
           box-sizing: border-box;
         }
         font-size: 14px;
       }
-      h1 {
+      h1,
+      .h1 {
         font-size: 4rem;
       }
-      h2 {
+      h2,
+      .h2 {
         font-size: 3.2rem;
       }
-      h3 {
+      h3,
+      .h3 {
         font-size: 2.8rem;
       }
-      h4 {
+      h4,
+      .h4 {
         font-size: 2.4rem;
       }
-      h5 {
+      h5,
+      .h5 {
         font-size: 2rem;
       }
-      h6 {
+      h6,
+      .h6 {
         font-size: 1.6rem;
       }
       .h1,
@@ -59,6 +68,11 @@ export const GlobalStyle = () => (
         font-weight: 500;
         line-height: 1.2;
       }
+      p {
+        display: inline-block;
+        margin-bottom: 10px;
+        line-height: 1.4;
+      }
     `}
   />
 );
@@ -66,12 +80,16 @@ export const GlobalStyle = () => (
 const App: React.FC = () => {
   return (
     <ThemeProvider theme={theme}>
-      <GlobalStyle />
-      <Router>
-        <IOProvider>
-          <Routes />
-        </IOProvider>
-      </Router>
+      <ToasterProvider>
+        <GlobalStyle />
+        <Router>
+          <IOProvider>
+            <Styled.AppWrapper>
+              <Routes />
+            </Styled.AppWrapper>
+          </IOProvider>
+        </Router>
+      </ToasterProvider>
     </ThemeProvider>
   );
 };

@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from '@emotion/styled';
 
 type Props = {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   span?: number;
   tag?: keyof JSX.IntrinsicElements;
 };

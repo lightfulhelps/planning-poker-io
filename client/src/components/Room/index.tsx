@@ -1,14 +1,15 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 
 import { useIO } from '../../contexts/io';
-import { useParams, useHistory, useLocation } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import Poker from '../Poker';
-import { Container, Button } from '../../styles/components';
+import { Container, Button, Row, Col } from '../../styles/components';
 import { ArrowLeft, Plus } from 'react-feather';
 import CopyToClipBoard from '../common/CopyToClipboard';
+import * as Styled from './roomStyle';
 
 const Room: React.FC = () => {
-  const { user, room } = useIO();
+  const { room } = useIO();
   const { id } = useParams();
   const history = useHistory();
 
@@ -23,27 +24,31 @@ const Room: React.FC = () => {
     return (
       <>
         <Container>
-          <Button isRound isOutline onClick={() => history.goBack()}>
-            <ArrowLeft />
-          </Button>
-
-          <CopyToClipBoard
-            text={`${process.env.REACT_APP_APP_URL}/invitation/${room.id}`}
-            render={({ copy }) => (
-              <Button isRound isOutline onClick={copy}>
-                <Plus />
-              </Button>
-            )}
-          />
-          <h1>Room {id}</h1>
-          <p>Hello {user?.name}</p>
-          <ul>
-            {room?.players.map((user) => (
-              <li key={user.id}>
-                {user.name} ({user.id})
-              </li>
-            ))}
-          </ul>
+          <Styled.Heading justify="center">
+            <Styled.HeaderButtonWrapper>
+              <Row>
+                <Col>
+                  <Button isRound isOutline onClick={() => history.goBack()}>
+                    <ArrowLeft />
+                  </Button>
+                </Col>
+                <Col>
+                  <CopyToClipBoard
+                    text={`${process.env.REACT_APP_APP_URL}/invitation/${room.id}`}
+                    render={({ copy }) => (
+                      <Button isRound isOutline onClick={copy}>
+                        <Plus />
+                      </Button>
+                    )}
+                  />
+                </Col>
+              </Row>
+            </Styled.HeaderButtonWrapper>
+            <Col>
+              <h1>PLANING POKER</h1>
+            </Col>
+            <Col />
+          </Styled.Heading>
           <Poker players={room.players} />
         </Container>
       </>

@@ -1,5 +1,4 @@
 import React from 'react';
-import styled from '@emotion/styled';
 import CardIcon from '../common/CardIcon';
 
 type Props = { onClick: (card: Card) => void; value: string | number };

@@ -1,5 +1,6 @@
-import React, { useRef, ReactNode } from 'react';
+import React, { useRef } from 'react';
 import styled from '@emotion/styled';
+import { useToaster } from '../../contexts/toaster';
 
 type Props = {
   text: string;
@@ -8,16 +9,17 @@ type Props = {
 
 const CopyToClipBoard = ({ text, render }: Props) => {
   const ref = useRef(null);
+  const { addToast } = useToaster();
   const copy = (e) => {
-    console.log('copy :');
     ref.current.select();
-    console.log('invitationRef.current :', ref.current);
     document.execCommand('copy');
     e.target.focus();
+    addToast('primary', 'Invitation link copied to your clipboard');
   };
 
   const HiddenTextArea = styled.textarea({
     height: 0,
+    opacity: 0,
     position: 'absolute',
     zIndex: -9999,
   });

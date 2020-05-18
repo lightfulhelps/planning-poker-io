@@ -1,3 +1,5 @@
 import styled from '@emotion/styled';
 
-export const Table = styled.table((props) => ({}));
+export const AppWrapper = styled.div({
+  marginTop: 40,
+});

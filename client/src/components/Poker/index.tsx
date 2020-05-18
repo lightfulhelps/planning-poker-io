@@ -18,7 +18,7 @@ const Poker: React.FC<Props> = ({ players }) => {
 
   useEffect(() => {
     if (!players.find((player) => !player.card)) reveal();
-  }, [players]);
+  }, [players, reveal]);
 
   return (
     <>

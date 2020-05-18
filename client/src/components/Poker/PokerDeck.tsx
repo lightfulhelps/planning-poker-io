@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PokerCard from './PokerCard';
 import { useIO } from '../../contexts/io';
 import { Row, Col } from '../../styles/components';

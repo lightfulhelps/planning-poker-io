@@ -40,6 +40,7 @@ const CardIcon: React.FC<Props> = ({
     ...(onClick && { cursor: 'pointer' }),
     ':after': {
       ...commonStyle,
+      WebkitBackfaceVisibility: 'hidden',
       content: '""',
       backgroundColor: theme.colors[color],
       transform: 'rotate(-8.6deg)',

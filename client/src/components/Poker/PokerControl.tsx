@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Row } from '../../styles/components';
+import { Button } from '../../styles/components';
 import * as Styled from './pokerStyle';
 
 type Props = {

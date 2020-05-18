@@ -29,8 +29,6 @@ const StyledWrapper = styled.div({
 });
 
 const Input: React.FC<InputProps> = ({ className, icon, ...others }) => {
-  console.log('...others :', others);
-
   const Icon = icon ? Icons[upperFirst(camelCase(icon))] : undefined;
 
   const StyledIcon =
