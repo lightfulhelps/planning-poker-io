@@ -78,6 +78,7 @@ export const GlobalStyle = () => (
 );
 
 const App: React.FC = () => {
+  consoleGreetings();
   return (
     <ThemeProvider theme={theme}>
       <ToasterProvider>
