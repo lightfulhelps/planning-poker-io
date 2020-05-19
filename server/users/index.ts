@@ -4,14 +4,14 @@ type User = Player;
 
 type UserListItem = { [key: string]: Omit<Player, 'id'> };
 
-let usersList: UserListItem[] = [];
-
-export const getUsers = (ids: Id[]): User[] => {
-  return ids.map((id) => getUser(id)).filter((e) => e !== null);
-};
+let usersList: { [key: string]: Omit<Player, 'id'> } = {};
 
 export const getUser = (id: Id): User | null => {
   return { id, ...usersList[id] } || null;
+};
+
+export const getUsers = (ids: Id[]): User[] => {
+  return ids.map((id) => getUser(id)).filter((e) => e !== null);
 };
 
 export const setUser = (id: Id, userInfo: Partial<User>): User => {

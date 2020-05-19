@@ -2,9 +2,9 @@ import { setUser, getUsers, getUser } from './users';
 
 console.clear();
 
-const express = require('express');
-const http = require('http');
-const socketIO = require('socket.io');
+import express from 'express';
+import http from 'http';
+import socketIO from 'socket.io';
 
 const port = process.env.PORT || 7000;
 
@@ -42,7 +42,7 @@ io.on('connection', (socket) => {
     updateClientRoom(user.roomId);
   });
 
-  socket.on('poker_reset', (card: Card) => {
+  socket.on('poker_reset', () => {
     console.log('getUser(socket.id).roomId :', getUser(socket.id).roomId);
     console.log('io.sockets.adapter.rooms :', io.sockets.adapter.rooms);
     Object.keys(
@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
     io.sockets.in(roomId).emit(event);
   });
 
-  socket.on('disconnecting', (reason: string) => {
+  socket.on('disconnecting', () => {
     updateClientRooms(true);
     let rooms = Object.keys(socket.rooms);
     rooms.forEach((roomId) => {
