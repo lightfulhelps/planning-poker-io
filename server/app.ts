@@ -23,6 +23,8 @@ const server = http.createServer(app);
 
 export const io = socketIO(server);
 
+io.origins('*:*');
+
 io.on('connection', (socket) => {
   socket.on('user_connecting', ({ userInfo, roomId }, then) => {
     console.log(`${userInfo.name} is connected to room : ${roomId}`);
