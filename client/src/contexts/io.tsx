@@ -20,6 +20,7 @@ interface ContextProps {
 
 const socket = socketIOClient(endpoint, {
   autoConnect: false,
+  transports: ['websocket'],
 });
 
 export const IOContext = React.createContext<ContextProps | null>(null);
