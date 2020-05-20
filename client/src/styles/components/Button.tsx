@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '../styled';
+import styled from '@emotion/styled';
 import theme from '../theme';
 import { upperFirst, camelCase } from 'lodash';
 import { VariantTypes } from './types';
@@ -54,7 +54,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
     ...colors,
     ...(isDisabled && {
       backgroundColor: theme.colors.gray200,
-      colors: theme.colors.gray700,
+      color: theme.colors.gray400,
       cursor: 'default',
     }),
     ...(isRound

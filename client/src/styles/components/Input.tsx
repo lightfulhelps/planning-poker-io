@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from '../styled';
+import styled from '@emotion/styled';
 import theme from '../theme';
 import { upperFirst, camelCase } from 'lodash';
 import * as Icons from 'react-feather';
@@ -9,7 +9,7 @@ export interface InputProps extends React.HTMLProps<HTMLInputElement> {
   icon?: string;
 }
 
-const StyledInput = styled.input(({ withIcon }: { withIcon: string }) => ({
+const StyledInput = styled.input(({ withIcon }: { withIcon: boolean }) => ({
   padding: withIcon
     ? `${theme.spacing[2]} ${theme.spacing[3]} ${theme.spacing[2]} 4.7rem`
     : `${theme.spacing[2]} ${theme.spacing[3]}`,
