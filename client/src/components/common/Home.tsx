@@ -46,7 +46,7 @@ const Home = () => {
         </p>
       </HomeHeading>
       <Form />
-      <DisclaimerBlock>
+      {/* <DisclaimerBlock>
         <span className="h5">Disclaimer</span>
         <p>
           This project is not a professionnal product. There is at this point,
@@ -64,7 +64,7 @@ const Home = () => {
             this link
           </a>
         </p>
-      </DisclaimerBlock>
+      </DisclaimerBlock> */}
     </Container>
   );
 };
