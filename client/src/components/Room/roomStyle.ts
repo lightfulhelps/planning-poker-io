@@ -11,6 +11,6 @@ export const HeaderButtonWrapper = styled.div({
   },
 });
 
-export const Heading = styled(Row)({
+export const HeadingRow = styled(Row)({
   position: 'relative',
 });

@@ -1,6 +1,5 @@
 import React, { ReactElement } from 'react';
-import theme from '../../styles/theme';
-import styled from '@emotion/styled';
+import styled from '../../styles/styled';
 
 interface Props {
   value: string;
@@ -27,7 +26,7 @@ const CardIcon: React.FC<Props> = ({
     height: 45,
     marginTop: 10,
   };
-  const PlayCard = styled.div({
+  const PlayCard = styled.div(({ theme }) => ({
     ...commonStyle,
     backgroundColor: theme.colors.white,
     display: 'flex',
@@ -49,7 +48,7 @@ const CardIcon: React.FC<Props> = ({
       position: 'absolute',
       zIndex: -10,
     },
-  });
+  }));
 
   const Wrapper = styled.div({
     display: 'inline-block',

@@ -1,6 +1,5 @@
 import React from 'react';
-import styled from '@emotion/styled';
-import theme from '../theme';
+import styled from '../../styles/styled';
 import { upperFirst, camelCase } from 'lodash';
 import { VariantTypes } from './types';
 
@@ -37,11 +36,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   },
   ...others
 }) => {
-  const colors = !isOutline
-    ? { backgroundColor: theme.colors[variant], color: theme.colors.white }
-    : { backgroundColor: theme.colors.white, color: theme.colors[variant] };
-
-  const StyledButton = styled.button({
+  const StyledButton = styled.button(({ theme }) => ({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
@@ -51,7 +46,9 @@ const Button: React.FunctionComponent<ButtonProps> = ({
     cursor: 'pointer',
     textTransform: 'uppercase',
     fontWeight: 500,
-    ...colors,
+    ...(!isOutline
+      ? { backgroundColor: theme.colors[variant], color: theme.colors.white }
+      : { backgroundColor: theme.colors.white, color: theme.colors[variant] }),
     ...(isDisabled && {
       backgroundColor: theme.colors.gray200,
       color: theme.colors.gray400,
@@ -79,9 +76,9 @@ const Button: React.FunctionComponent<ButtonProps> = ({
           : { marginLeft: theme.spacing[1] }),
       }),
     },
-  });
+  }));
 
-  const StyledLink = styled.button({
+  const StyledLink = styled.button(({ theme }) => ({
     background: 'none',
     color: theme.colors.primary,
     border: 'none',
@@ -92,7 +89,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
     '&:hover': {
       color: 'inherit',
     },
-  });
+  }));
 
   const Icon = icon ? Icons[upperFirst(camelCase(icon))] : undefined;
 

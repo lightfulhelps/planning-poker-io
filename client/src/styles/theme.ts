@@ -29,6 +29,8 @@ export default {
     body: '#f6f9fc',
     font: '#525F7F',
 
+    card: '#ffffff',
+
     get primary() {
       return this.blue;
     },

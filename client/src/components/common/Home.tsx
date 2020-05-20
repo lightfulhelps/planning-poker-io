@@ -3,10 +3,9 @@ import { useParams } from 'react-router-dom';
 import MainForm from '../Form/MainForm';
 import InvitationForm from '../Form/InvitationForm';
 import { Container } from '../../styles/components';
-import styled from '@emotion/styled';
-import theme from '../../styles/theme';
+import styled from '../../styles/styled';
 
-const HomeHeading = styled.div({
+const HomeHeading = styled.div(({ theme }) => ({
   width: 800,
   textAlign: 'center',
   margin: '0 auto',
@@ -15,9 +14,9 @@ const HomeHeading = styled.div({
     textTransform: 'uppercase',
     marginBottom: theme.spacing[4],
   },
-});
+}));
 
-const DisclaimerBlock = styled.div({
+const DisclaimerBlock = styled.div(({ theme }) => ({
   width: 900,
   margin: `80px auto 0 auto`,
   span: {
@@ -26,10 +25,11 @@ const DisclaimerBlock = styled.div({
     display: 'block',
     marginBottom: theme.spacing[2],
   },
-});
+}));
 
 const Home = () => {
   const { roomId } = useParams();
+
   const Form = roomId ? InvitationForm : MainForm;
   return (
     <Container>

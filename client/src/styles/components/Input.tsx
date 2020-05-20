@@ -1,6 +1,5 @@
 import React from 'react';
-import styled from '@emotion/styled';
-import theme from '../theme';
+import styled from '../../styles/styled';
 import { upperFirst, camelCase } from 'lodash';
 import * as Icons from 'react-feather';
 
@@ -9,7 +8,7 @@ export interface InputProps extends React.HTMLProps<HTMLInputElement> {
   icon?: string;
 }
 
-const StyledInput = styled.input(({ withIcon }: { withIcon: boolean }) => ({
+const StyledInput = styled.input(({ withIcon, theme }: any) => ({
   padding: withIcon
     ? `${theme.spacing[2]} ${theme.spacing[3]} ${theme.spacing[2]} 4.7rem`
     : `${theme.spacing[2]} ${theme.spacing[3]}`,
@@ -23,10 +22,10 @@ const StyledInput = styled.input(({ withIcon }: { withIcon: boolean }) => ({
   },
 }));
 
-const StyledWrapper = styled.div({
+const StyledWrapper = styled.div(({ theme }) => ({
   position: 'relative',
   margin: `${theme.spacing[3]} 0`,
-});
+}));
 
 const Input: React.FC<InputProps> = ({ className, icon, ...others }) => {
   const Icon = icon ? Icons[upperFirst(camelCase(icon))] : undefined;

@@ -1,4 +1,4 @@
-import styled from '@emotion/styled';
+import styled from '../styles/styled';
 
 export const AppWrapper = styled.div({
   marginTop: 40,

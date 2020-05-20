@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import styled from '@emotion/styled';
+import styled from '../../styles/styled';
 import { useToaster } from '../../contexts/toaster';
 
 type Props = {

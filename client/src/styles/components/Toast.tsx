@@ -1,8 +1,7 @@
 import React from 'react';
 import { X } from 'react-feather';
 import { VariantTypes } from './types';
-import styled from '@emotion/styled';
-import theme from '../theme';
+import styled from '../../styles/styled';
 
 interface ToastProps {
   message: string;
@@ -12,7 +11,7 @@ interface ToastProps {
 }
 
 export const Toaster: React.FC = ({ children }) => {
-  const SToaster = styled.div({
+  const SToaster = styled.div(({ theme }) => ({
     position: 'absolute',
     zIndex: 1000,
     maxWidth: '60%',
@@ -20,7 +19,7 @@ export const Toaster: React.FC = ({ children }) => {
     left: theme.spacing[4],
     // left: '50%',
     // transform: 'translate(-50%,0)',
-  });
+  }));
   return <SToaster>{children}</SToaster>;
 };
 
@@ -43,7 +42,7 @@ const Toast: React.FC<ToastProps> = ({ message, variant, id, handleClose }) => {
       transition: 'all 0.1s',
     },
   };
-  const Layout = styled.div({
+  const Layout = styled.div(({ theme }) => ({
     backgroundColor: theme.colors.white,
     boxShadow:
       '0 6px 12px -2px rgba(50,50,93,.25), 0 3px 7px -3px rgba(0,0,0,.3)',
@@ -71,7 +70,7 @@ const Toast: React.FC<ToastProps> = ({ message, variant, id, handleClose }) => {
         position: 'absolute',
       },
     },
-  });
+  }));
 
   return (
     <Layout>
