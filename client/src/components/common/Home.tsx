@@ -23,7 +23,7 @@ const DisclaimerBlock = styled.div({
   span: {
     textTransform: 'uppercase',
     color: theme.colors.red,
-    display: 'inline-block',
+    display: 'block',
     marginBottom: theme.spacing[2],
   },
 });
@@ -34,7 +34,7 @@ const Home = () => {
   return (
     <Container>
       <HomeHeading>
-        <h1>Planing Poker</h1>
+        <h1>Planning Poker</h1>
         <p>
           This app helps you to hestimate tickets with your colleagues. Ask them
           to join your room or send them an invitation link.
@@ -46,14 +46,15 @@ const Home = () => {
         </p>
       </HomeHeading>
       <Form />
-      {/* <DisclaimerBlock>
+      <DisclaimerBlock>
         <span className="h5">Disclaimer</span>
-        <p>
+        <p>This is a work in progress</p>
+        {/* <p>
           This project is not a professionnal product. There is at this point,
           no security on the room. They are public and anyone with the room ID
           can enter. Fortunately your point estimation should not be a top
           secret information.
-        </p>
+        </p> */}
         <p>
           If you are not familiar with planning poker follow{' '}
           <a
@@ -64,7 +65,7 @@ const Home = () => {
             this link
           </a>
         </p>
-      </DisclaimerBlock> */}
+      </DisclaimerBlock>
     </Container>
   );
 };

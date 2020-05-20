@@ -45,7 +45,7 @@ const Room: React.FC = () => {
               </Row>
             </Styled.HeaderButtonWrapper>
             <Col>
-              <h1>PLANING POKER</h1>
+              <h1>PLANNING POKER</h1>
             </Col>
             <Col />
           </Styled.Heading>
