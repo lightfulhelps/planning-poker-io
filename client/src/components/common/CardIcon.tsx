@@ -28,7 +28,7 @@ const CardIcon: React.FC<Props> = ({
   };
   const PlayCard = styled.div(({ theme }) => ({
     ...commonStyle,
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.body,
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',

@@ -22,6 +22,11 @@ export type Theme = {
     body: string;
     font: string;
 
+    cardBg: string;
+    cardBorder: string;
+    inputBg: string;
+    inputBorder: string;
+
     success: string;
     error: string;
     primary: string;

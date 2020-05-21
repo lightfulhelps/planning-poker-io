@@ -48,7 +48,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
     fontWeight: 500,
     ...(!isOutline
       ? { backgroundColor: theme.colors[variant], color: theme.colors.white }
-      : { backgroundColor: theme.colors.white, color: theme.colors[variant] }),
+      : { backgroundColor: theme.colors.body, color: theme.colors[variant] }),
     ...(isDisabled && {
       backgroundColor: theme.colors.gray200,
       color: theme.colors.gray400,

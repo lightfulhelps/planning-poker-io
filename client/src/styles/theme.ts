@@ -29,7 +29,14 @@ export default {
     body: '#f6f9fc',
     font: '#525F7F',
 
-    card: '#ffffff',
+    cardBg: '#ffffff',
+    cardBorder: '#ffffff',
+
+    inputBg: '#ffffff',
+
+    get inputBorder() {
+      return this.gray400;
+    },
 
     get primary() {
       return this.blue;

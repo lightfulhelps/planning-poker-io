@@ -12,10 +12,11 @@ const StyledInput = styled.input(({ withIcon, theme }: any) => ({
   padding: withIcon
     ? `${theme.spacing[2]} ${theme.spacing[3]} ${theme.spacing[2]} 4.7rem`
     : `${theme.spacing[2]} ${theme.spacing[3]}`,
-  background: theme.colors.white,
-  border: `solid 1px ${theme.colors.gray400}`,
+  background: theme.colors.inputBg,
+  border: `solid 1px ${theme.colors.inputBorder}`,
   borderRadius: theme.borderRad.default,
   fontSize: theme.fontSize.md,
+  color: theme.colors.font,
   '&:focus': {
     outline: 'none',
     borderColor: theme.colors.gray500,
