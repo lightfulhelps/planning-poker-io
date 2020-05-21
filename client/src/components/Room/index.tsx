@@ -4,7 +4,7 @@ import { useIO } from '../../contexts/io';
 import { useParams, useHistory } from 'react-router-dom';
 import Poker from '../Poker';
 import { Container, Button, Row, Col } from '../../styles/components';
-import { ArrowLeft, Plus } from 'react-feather';
+import { ArrowLeft, UserPlus } from 'react-feather';
 import CopyToClipBoard from '../common/CopyToClipboard';
 import * as Styled from './roomStyle';
 
@@ -37,7 +37,7 @@ const Room: React.FC = () => {
                     text={`${process.env.REACT_APP_APP_URL}/invitation/${room.id}`}
                     render={({ copy }) => (
                       <Button isRound isOutline onClick={copy}>
-                        <Plus />
+                        <UserPlus />
                       </Button>
                     )}
                   />
