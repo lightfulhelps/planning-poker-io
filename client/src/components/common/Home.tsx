@@ -48,7 +48,7 @@ const Home = () => {
       <Form />
       <DisclaimerBlock>
         <span className="h5">Disclaimer</span>
-        <p>This is a work in progress</p>
+        <p>This is a work in progress.</p>
         {/* <p>
           This project is not a professionnal product. There is at this point,
           no security on the room. They are public and anyone with the room ID

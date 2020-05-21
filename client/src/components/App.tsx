@@ -69,7 +69,7 @@ export const GlobalStyle = () => (
         line-height: 1.2;
       }
       p {
-        display: inline-block;
+        display: block;
         margin-bottom: 10px;
         line-height: 1.4;
       }
