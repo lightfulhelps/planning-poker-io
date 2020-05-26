@@ -44,7 +44,9 @@ const Form: React.FC = () => {
         placeholder="Room id (4 char. min)"
         value={roomId}
         icon="box"
-        onChange={(e) => setRoomId((e.target as HTMLTextAreaElement).value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setRoomId(e.target.value)
+        }
       />
       <Input
         name="name"
@@ -52,7 +54,9 @@ const Form: React.FC = () => {
         placeholder="Username (2 char. min)"
         value={name}
         icon="user"
-        onChange={(e) => setName((e.target as HTMLTextAreaElement).value)}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+          setName(e.target.value)
+        }
       />
       <Styled.SubmitButton
         isDisabled={!valid}

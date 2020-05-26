@@ -37,8 +37,8 @@ const Form: React.FC<{ roomId: string }> = ({ roomId }) => {
   const { connect } = useIO();
   const valid = name.length > 1;
 
-  const handleChange = (e) => {
-    setName((e.target as HTMLInputElement).value);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value);
   };
   const onSubmit = (e) => {
     e.preventDefault();
