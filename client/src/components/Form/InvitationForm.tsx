@@ -40,7 +40,7 @@ const Form: React.FC<{ roomId: string }> = ({ roomId }) => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
   };
-  const onSubmit = (e) => {
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (valid) connect({ name }, roomId);
   };
@@ -53,7 +53,7 @@ const Form: React.FC<{ roomId: string }> = ({ roomId }) => {
         placeholder="Username"
         value={name}
         icon="box"
-        onChange={(e) => handleChange(e)}
+        onChange={handleChange}
       />
       <Styled.SubmitButton
         icon="arrowRight"
